@@ -35,7 +35,50 @@ const allItems = document.querySelectorAll(".image")
 
 let currentImage = 0;
 
-prevButton.addEventListener("click", function(){
+prevButton.addEventListener("click", prevSlider);
+
+nextButton.addEventListener("click", nextSlider);
+
+let autoplay = setInterval(nextSlider, 3000);
+
+const stopAutoplayBtn = document.querySelector('.stop-autoplay');
+
+stopAutoplayBtn.addEventListener('click', function(){
+
+    if (autoplay == null){
+        autoplay = setInterval(nextSlider, 3000);
+
+        stopAutoplayBtn.innerHTML = 'STOP';
+    }
+
+    else{
+        clearInterval(autoplay);
+        autoplay = null;
+
+        stopAutoplayBtn.innerHTML = 'START';
+    }
+})
+
+
+/* FUNZIONI */
+
+function nextSlider(){
+    allItems[currentImage].classList.remove("active");
+
+    if (currentImage < (allItems.length - 1)){
+        
+        currentImage++;
+    }
+
+    else if (currentImage == (allItems.length - 1)){
+
+        currentImage = 0;
+    }
+
+    allItems[currentImage].classList.add("active");
+};
+
+function prevSlider(){
     allItems[currentImage].classList.remove("active");
 
     if (currentImage > 0){
@@ -50,23 +93,5 @@ prevButton.addEventListener("click", function(){
    
 
     allItems[currentImage].classList.add("active");
-});
-
-nextButton.addEventListener("click", function(){
-    allItems[currentImage].classList.remove("active");
-
-    if (currentImage < (allItems.length - 1)){
-        
-        currentImage++;
-    }
-
-    else if (currentImage == (allItems.length - 1)){
-
-        currentImage = 0;
-    }
-
-    allItems[currentImage].classList.add("active");
-});
-
-
+};
 
